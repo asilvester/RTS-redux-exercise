@@ -1,53 +1,63 @@
-// http://hn.algolia.com/api/v1/search?query=
 
 import React, { Component } from 'react';
-// AddNinja.JS
+import { connect } from 'react-redux';
+import { createSearch } from '../../Actions/createSearch';
+import { SearchResultsActions } from '../../Actions/searchResultsActions';
 
-class Searchbar extends Component {
+
+class Navbar extends Component {
     state = {
-        name: null,
-        age: null,
-        belt: null,
+        searchTerm: "" 
     }
 
-    
-
     handleChange = (e) => {
+        // value of the input from the search form
+        let newSearchTerm = e.target.value;
+        // takes newSearchTerm and places it into state
         this.setState({
-            [e.target.id]: e.target.value
-        })
+            searchTerm: newSearchTerm
+        });
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.props)
-        // console.log(this.state)
-        // this.props.addNinja(this.state);
-        // this.props.testfunction('hello')
+        // capture the current input to save to our search history
+        this.props.createSearch(this.state.searchTerm);
+        // capture the input search tearm to save for search history
+        this.props.SearchResultsActions(this.state.searchTerm)
     }
 
     render() {
         return(
             <div>
-                <p>hello from search bar component</p>
-
+                <span>hello from search bar component</span>
                 <form onSubmit={this.handleSubmit}>                  
-                    <label htmlFor='name'>Name:</label>
-                    <input type='text' id='name' onChange={this.handleChange}></input>                   
-                     <label htmlFor='age'>age:</label>
-                    <input type='text' id='age' onChange={this.handleChange}></input>                    
-                    <label htmlFor='belt'>belt:</label>
-                    <input type='text' id='belt' onChange={this.handleChange}></input>    
+                    <label htmlFor='name'>Search:</label>
+                    <input type='text' id='SearchTerm' onChange={this.handleChange}></input>                   
                     <button >Submit</button>                
                 </form>
-
-
+                <div className='searchResults'>
+                </div>
             </div>
 
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    // console.log(state.previousSearchTerms)
+    return {
+        searches: state.searches,
+        results: state.previousSearchTerms
+    }
+}
 
+const mapDispatchToProps = (dispatch) => {
+    // pretty self explanatory. allows the createSearch(), and SearchResultsActions() in the Actions folder to be accessible via props
+    return {
+        createSearch: (terms) => { dispatch(createSearch(terms)) },
+        SearchResultsActions: (query) => dispatch(SearchResultsActions(query))
+    }
+}
 
-export default Searchbar;
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

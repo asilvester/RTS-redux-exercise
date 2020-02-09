@@ -1,0 +1,16 @@
+.search-results-list{
+    align-content: center,
+}
+
+.search-card{
+    /* background: green */
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.search-item{
+    display: block;
+    border: 1px solid black;
+    margin: 0 auto;
+
+}

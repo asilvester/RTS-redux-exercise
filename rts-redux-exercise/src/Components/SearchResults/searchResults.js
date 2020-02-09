@@ -1,26 +1,56 @@
-// http://hn.algolia.com/api/v1/search?query=
+// // http://hn.algolia.com/api/v1/search?query=
 
-import React from 'react';
-// ninjas.JS
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import './searchResults.css'
+class SearchResults extends Component {
 
-const SearchResults = ({searchResults}) => {
-    const searchResultsList = searchResults.map(ninja => {
-        return ninja.age > 20 ? (
-            <div className='searchResultItem' key={ninja.id}>
-                <div>Name: {ninja.name}</div>
-                <div>Age: {ninja.age} </div>
-                <div>belt: {ninja.belt}</div>
+    receiveSearchResults = () => {
+        // console.log(this.props.searchResults.length)
+        if (this.props.searchResults.length  < 1){
+
+            return(
+                <div>
+                    <p className="">There are no results to display.</p>
+                </div>
+            )
+        } else {
+            const { searchResults } = this.props;
+            return(
+                <div className='search-card'>
+                    {searchResults.map(item=>{
+                        {/* console.log(item.created_at_i) */}
+                        return(
+                            <div>
+                            <a key={item.created_at_i} className='search-item' href={item.url}>{item.title}</a>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+            
+        }
+    }
+
+    render() {
+        return(
+            <div>
+               <h1>Search Results</h1>
+                <div className='search-results-list'>
+                    {this.receiveSearchResults()}
+                </div>
             </div>
-        ) : null
-    })
-
-    return(
-        <div>
-            hello from search results component
-            <div className='searchResultsList'>
-                {searchResultsList}
-            </div>
-        </div>
-    )
+        )
+    }
 }
-export default SearchResults;
+
+
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        // the returned object represents the different properties we want to be in props
+        searchResults: state.searches
+    }
+}
+
+export default connect(mapStateToProps)(SearchResults);

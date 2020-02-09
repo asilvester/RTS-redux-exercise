@@ -1,49 +1,30 @@
 // this is the parent component
 
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Searchbar from './Components/Searchbar/searchbar';
-import SearchHistory from './Components/SearchHistory/searchHistory';
 import SearchResults from './Components/SearchResults/searchResults';
+import SearchHistory from './Components/SearchHistory/searchHistory';
 
 
 class App extends Component {
-  state = {
-    ninjas:[
-      { name: 'Ryu', age: 30, belt: 'black', id: 1 },
-      { name: 'Yoshi', age: 20, belt: 'green', id: 2 },
-      { name: 'Crystal', age: 25, belt: 'pink', id: 3 }
-    ]
-  }
-
-  addNinja = (ninja) => {
-    console.log(ninja)
-    // ninja.id = Math.random();
-    // let ninjas = [...this.state.ninjas, ninja];
-    // this.setState({
-    //   ninjas: ninjas
-    // });
-  }
-  
-
-  testfunction = (message) => {
-    console.log(message)
-  }
-
   render(){
-    console.log('app.js is rendered')
     return (
       <div className='App'>
-        {/*child components*/}
-        <Searchbar /> 
-        <SearchResults searchResults={this.state.ninjas}/>
-        <SearchHistory addNinja={this.addNinja} testfunction={this.testfunction} />
+        <Searchbar/>
+        <div className='container text-center'>
+          <div className='row'>
+              <div className='col'>
+                <SearchHistory/>
+              </div>
+              <div className='col'>
+                <SearchResults/>
+              </div>
+          </div>
+        </div>
       </div>
     );
   }
 } 
 
 export default App;
-
-
