@@ -12,9 +12,9 @@ class SearchHistory extends Component {
     }
 
     receiveSearchHistory = () => {
-        if(this.props.searchResults.length > 0){
+        if(this.props.searchResults.length > 0) {
             const { searchResults } = this.props;
-            console.log(searchResults)
+            // console.log(searchResults)
             return (
                 <div>
                     <h3>Search History</h3>
@@ -25,18 +25,16 @@ class SearchHistory extends Component {
                                 <button key={searchTerm.id} id={searchTerm.id} value={searchTerm.title} onClick={this.searchAgain}>  
                                     {searchTerm.title}
                                 </button>
-                                /* <button className="btn btn-info m-2" id={search} key={search} onClick={this.retroSearch}>{search}</button> */                            
                             )
                         })}
                     </div>
                 </div>
             )
         }
-        else{
+        else {
             return (
                 <div>
                     <h3>Type in the Search Bar to produce results</h3>
-                    
                 </div>
             )
         }
@@ -45,7 +43,6 @@ class SearchHistory extends Component {
     render() {
         return(
             <div>
-                {/* <h3>Previous Search Terms</h3> */}
                 <div className='previous-search-term-list'>
                     {this.receiveSearchHistory()}
                 </div>
@@ -54,9 +51,7 @@ class SearchHistory extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
-    // console.log(state.previousSearchTerms)
     return {
         searchResults: state.previousSearchTerms,
         searches: state.searches,
@@ -67,11 +62,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     // pretty self explanatory. allows the createSearch(), and SearchResultsActions() in the Actions folder to be accessible via props
     return {
-        // createSearch: (terms) => { dispatch(createSearch(terms)) },
         SearchResultsActions: (query) => dispatch(SearchResultsActions(query))
     }
 }
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(SearchHistory);
